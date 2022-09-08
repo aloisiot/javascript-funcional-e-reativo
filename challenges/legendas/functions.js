@@ -44,7 +44,7 @@ const removeIfIsNumber = (textList) => {
   return textList.filter((txt) => isNaN(txt.trim()));
 };
 
-const removeIfIsEmpty = (textList) => {
+const removeIfEmpty = (textList) => {
   return textList.filter((text) => text.trim());
 };
 
@@ -69,16 +69,26 @@ const removeSymbols = (symbols) => (text) => {
   return result;
 };
 
+function compose(...fns) {
+  return (valor) => {
+    return fns.reduce(async (ac, fn) => {
+      return Promise.resolve(ac) === ac ? fn(await ac) : fn(ac);
+    }, valor);
+  };
+}
+
+
 module.exports = {
   readDir,
   filterFilesByNameIncludes,
   readAllFiles,
-  removeIfIsEmpty,
+  removeIfEmpty,
   removeIfIsNumber,
   removeIfIncludes,
   joinContentFiles,
   extractWordsFromText,
   removeSymbols,
   splitBy,
-  joinBy
+  joinBy,
+  compose
 };

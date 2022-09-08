@@ -7,7 +7,7 @@ const subtitleDir = path.join(__dirname, "data");
 
 const SubtitleAnalizer = Object.create(Object);
 
-const symbols = ['<i>', '</i>', "\r", "[", "]", /[!,?#-$%^&*_)}({}]/g];
+const symbols = ["<i>", "</i>", "\r", "[", "]", /[!,?#-$%^&*_)}({}]/g];
 
 const writeResultFile = () => {
   Logger.debug("Writing result file.");
@@ -49,21 +49,25 @@ SubtitleAnalizer.prototype.writeResultFile = function () {
   fs.writeFileSync(file, fileContent, { encoding: "utf-8" });
 };
 
-SubtitleAnalizer.prototype.analize = () => {
-  fn.readDir(subtitleDir)
-    .then(fn.filterFilesByNameIncludes("legendas_"))
-    .then(fn.readAllFiles)
-    .then(fn.joinContentFiles)
-    .then(fn.removeSymbols(symbols))
-    .then(fn.splitBy("\n"))
-    .then(fn.removeIfEmpty)
-    .then(fn.removeIfIsNumber)
-    .then(fn.removeIfIncludes("-->"))
-    .then(fn.joinBy(" "))
-    .then(fn.extractWordsFromText)
-    .then(fn.removeIfEmpty)
-    .then(addWordsToResult)
-    .then(writeResultFile);
-}
+SubtitleAnalizer.prototype.analize = function () {
+  const analizeChain = fn.compose(
+    fn.readDir,
+    fn.filterFilesByNameIncludes("legendas_"),
+    fn.readAllFiles,
+    fn.joinContentFiles,
+    fn.removeSymbols(symbols),
+    fn.splitBy("\n"),
+    fn.removeIfEmpty,
+    fn.removeIfIsNumber,
+    fn.removeIfIncludes("-->"),
+    fn.joinBy(" "),
+    fn.extractWordsFromText,
+    fn.removeIfEmpty,
+    addWordsToResult,
+    writeResultFile
+  );
+
+  analizeChain(subtitleDir);
+};
 
 SubtitleAnalizer.analize();

@@ -1,7 +1,5 @@
-function deepCopy(obj) {
-  if (typeof obj !== "object") {
-    throw Error("O parametro deve ser um objeto.");
-  }
+export default function deepCopy(obj) {
+  if (typeof obj !== "object") return obj;
   const result = Array.isArray(obj) ? [] : {};
   for (const key in obj) {
     if (typeof obj[key] === "object") {
@@ -12,5 +10,3 @@ function deepCopy(obj) {
   }
   return result;
 }
-
-module.exports = deepCopy;

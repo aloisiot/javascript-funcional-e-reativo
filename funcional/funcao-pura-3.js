@@ -3,7 +3,7 @@
 // sem efeitos colaterais observaveis.
 
 let qtdExecucoes = 0;
-console.log("contados -> " + qtdExecucoes);
+console.log("contador -> " + qtdExecucoes);
 
 // Pura !!
 function somar(a, b) {
@@ -16,4 +16,4 @@ console.log(somar(15, 26));
 console.log(somar(15, 26));
 console.log(somar(15, 26));
 console.log(somar(15, 26));
-console.log("contados -> " + qtdExecucoes);
+console.log("contador -> " + qtdExecucoes);
