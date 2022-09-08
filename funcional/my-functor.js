@@ -19,6 +19,9 @@ function safeType(value) {
         return safeType(Array.isArray(copy) ? copy.map(fn) : fn(copy));
       }
     },
+    flatMap(fn) {
+      return this.map(fn).value;
+    },
   });
   return wraper;
 }
@@ -31,6 +34,6 @@ console.log(obj.value);
 console.log(mappedObj.value);
 
 const arr = safeType([1, 2, 3]);
-const mappedArray = arr.map((val) => val + 10);
+const mappedArray = arr.flatMap((val) => val + 10);
 console.log(arr.value);
-console.log(mappedArray.value);
+console.log(mappedArray);
