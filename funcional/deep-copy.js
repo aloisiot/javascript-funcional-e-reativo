@@ -1,12 +1,12 @@
 export default function deepCopy(obj) {
   if (typeof obj !== "object") return obj;
-  const result = Array.isArray(obj) ? [] : {};
+  const copy = Array.isArray(obj) ? [] : {};
   for (const key in obj) {
     if (typeof obj[key] === "object") {
-      result[key] = deepCopy(obj[key]);
+      copy[key] = deepCopy(obj[key]);
     } else {
-      result[key] = obj[key];
+      copy[key] = obj[key];
     }
   }
-  return result;
+  return copy;
 }
