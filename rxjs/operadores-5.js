@@ -2,14 +2,10 @@ import { Observable, of } from "rxjs";
 
 const terminaCom = (final) => (recurso) =>
   new Observable((inscrito) => {
-    recurso.subscribe({
-      next(v) {
-        if (typeof v === "string" && v.endsWith(final)) {
-          inscrito.next(v);
-        }
-      },
-      complete: () => inscrito.complete(),
-      error: (e) => inscrito.error(e),
+    recurso.subscribe((v) => {
+      if (typeof v === "string" && v.endsWith(final)) {
+        inscrito.next(v);
+      }
     });
   });
 
