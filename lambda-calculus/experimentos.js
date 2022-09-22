@@ -22,7 +22,9 @@ last = flip(first);
 r = last("FIRST")("LAST");
 r;
 
-// BOOLEAN
+// -------------
+//   BOOLEAN
+// -------------
 
 // TRUE
 const T = first;
