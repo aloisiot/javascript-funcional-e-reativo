@@ -4,15 +4,20 @@ import path from "path";
 
 export const readdir = (dir) => {
   return new Observable((subscriber) => {
-    fs.readdir(dir, (err, data) => {
-      if (err) {
-        subscriber.error(err);
-      } else {
-        subscriber.next(data.map((file) => path.join(dir, file)));
-        subscriber.complete();
+    try {
+      const files = fs.readdirSync(dir, { encoding: "utf-8" });
+      while (files.length) {
+        subscriber.next(path.join(dir, files.pop()));
       }
-    });
+      subscriber.complete();
+    } catch (e) {
+      subscriber.error(err);
+    }
   });
+};
+
+export const writeFile = (path) => (content) => {
+  fs.writeFileSync(path, content, { encoding: "utf-8" });
 };
 
 export const readFile = (file) => fs.readFileSync(file).toString();

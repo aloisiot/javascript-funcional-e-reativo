@@ -1,4 +1,3 @@
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import {
@@ -8,6 +7,7 @@ import {
   isEmpity,
   isNumber,
   not,
+  writeFile,
 } from "./functions";
 import { concatAll, filter, reduce, map } from "rxjs";
 import { removeSymbols, splitBy } from "../legendas/functions";
@@ -32,18 +32,19 @@ const sortResult = (result) => {
     }, {});
 };
 
-const writeResultFile = (path) => (content) => {
-  const data = {
-    total: Object.keys(content).length,
-    worldList: content,
-  };
-  const fileContent = JSON.stringify(data, null, 2);
-  fs.writeFileSync(path, fileContent, { encoding: "utf-8" });
+const handlerFileContent = (content) => {
+  return JSON.stringify(
+    {
+      total: Object.keys(content).length,
+      worldList: content,
+    },
+    null,
+    2
+  );
 };
 
 readdir(dataDir)
   .pipe(
-    concatAll(),
     filter(includes("legendas_")),
     map(readFile),
     map(removeSymbols(symbols)),
@@ -55,6 +56,7 @@ readdir(dataDir)
     concatAll(),
     filter(not(isEmpity)),
     reduce(addWordToResult, {}),
-    map(sortResult)
+    map(sortResult),
+    map(handlerFileContent)
   )
-  .subscribe(writeResultFile(resultFile));
+  .subscribe(writeFile(resultFile));
