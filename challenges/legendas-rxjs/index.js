@@ -7,7 +7,6 @@ import {
   readFile,
   isEmpity,
   isNumber,
-  joinBy,
   not,
 } from "./functions";
 import { concatAll, filter, reduce, map } from "rxjs";
@@ -47,14 +46,11 @@ readdir(dataDir)
     concatAll(),
     filter(includes("legendas_")),
     map(readFile),
-    reduce(joinBy("")),
     map(removeSymbols(symbols)),
     map(splitBy("\n")),
     concatAll(),
-    filter(not(isEmpity)),
     filter(not(isNumber)),
     filter(not(includes("-->"))),
-    reduce(joinBy(" ")),
     map(splitBy(" ")),
     concatAll(),
     filter(not(isEmpity)),
