@@ -12,12 +12,11 @@ const first = (f) => (l) => f;
 r = first("FIRST")("LAST");
 r;
 
-const flip = (λ) => (f) => (l) => λ(l)(f);
-
 let last = (f) => (l) => l;
 r = last("FIRST")("LAST");
 r;
 
+const flip = (λ) => (f) => (l) => λ(l)(f);
 last = flip(first);
 r = last("FIRST")("LAST");
 r;
@@ -25,6 +24,13 @@ r;
 // -------------
 //   BOOLEAN
 // -------------
+
+/*
+* Um predicado é uma função que retorna um valor booleano.
+* O predicado mais fundamental é ISZERO, que retorna TRUE se
+* o seu argumento é o numeral de Church 0, e FALSE se
+* seu argumento for qualquer outro numeral de Church.
+*/
 
 // TRUE
 const T = first;
@@ -34,9 +40,8 @@ T.inspect = () => "λ: TRUE";
 const F = last;
 F.inspect = () => "λ: FALSE";
 
-const NOT = (λ) => flip(λ)(T)(F);
-
 // NOT
+const NOT = (λ) => flip(λ)(T)(F);
 r = NOT(F);
 r;
 r = NOT(T);
