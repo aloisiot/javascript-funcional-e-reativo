@@ -5,7 +5,6 @@ import {
   includes,
   readFile,
   isEmpity,
-  isNumber,
   not,
   writeFile,
 } from "./functions";
@@ -14,7 +13,7 @@ import { removeSymbols, splitBy } from "../legendas/functions";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const dataDir = path.join(dir, "..", "legendas", "data");
-const resultFile = path.join(dir, "result.json");
+const file = path.join(dir, "result.json");
 
 const symbols = ["<i>", "</i>", "\r", "[", "]", /[!,-?#-$%"^&*_♪)}({}]/g];
 
@@ -50,7 +49,7 @@ readdir(dataDir)
     map(removeSymbols(symbols)),
     map(splitBy("\n")),
     concatAll(),
-    filter(not(isNumber)),
+    filter(isNaN),
     filter(not(includes("-->"))),
     map(splitBy(" ")),
     concatAll(),
@@ -59,4 +58,4 @@ readdir(dataDir)
     map(sortResult),
     map(handlerFileContent)
   )
-  .subscribe(writeFile(resultFile));
+  .subscribe(writeFile(file));

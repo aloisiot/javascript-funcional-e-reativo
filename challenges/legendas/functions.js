@@ -64,7 +64,7 @@ const filterFilesByNameIncludes = (substring) => (fileNames) => {
 const removeSymbols = (symbols) => (text) => {
   let result = text;
   symbols.forEach((symbol) => {
-    result = result.replaceAll(symbol, "");
+    result = result.split(symbol).join("");
   });
   return result;
 };

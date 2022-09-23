@@ -25,5 +25,4 @@ export const includes = (substring) => (text) => text.includes(substring);
 export const joinBy = (separator) => (str0, str1) => str0 + separator + str1;
 export const splitBy = (symbol) => (text) => text.split(symbol);
 export const isEmpity = (text) => text.trim().length === 0;
-export const isNumber = (txt) => !isNaN(txt.trim());
 export const not = (fn) => (value) => !fn(value);
