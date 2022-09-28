@@ -11,9 +11,9 @@ import {
 import { concatAll, filter, reduce, map } from "rxjs";
 import { removeSymbols, splitBy } from "../legendas/functions";
 
-const dir = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(dir, "..", "legendas", "data");
-const file = path.join(dir, "result.json");
+const __dir = path.dirname(fileURLToPath(import.meta.url));
+const dir = path.join(__dir, "..", "legendas", "data");
+const file = path.join(__dir, "result.json");
 
 const symbols = ["<i>", "</i>", "\r", "[", "]", /[!,-?#-$%"^&*_♪)}({}]/g];
 
@@ -42,7 +42,7 @@ const handlerFileContent = (content) => {
   );
 };
 
-readdir(dataDir)
+readdir(dir)
   .pipe(
     filter(includes("legendas_")),
     map(readFile),
